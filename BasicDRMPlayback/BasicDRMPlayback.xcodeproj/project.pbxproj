@@ -116,7 +116,7 @@
 				TargetAttributes = {
 					AC773E7E1F061017005C3B0E = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = "";
+						DevelopmentTeam = 4QGB6MS2AS;
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
@@ -334,7 +334,7 @@
 			baseConfigurationReference = 6C73832CD38787F694B6A6B6 /* Pods-BasicDRMPlayback.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4QGB6MS2AS;
 				INFOPLIST_FILE = BasicDRMPlayback/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bitmovin.player.samples.drm.basic-$(DEVELOPMENT_TEAM)";
@@ -347,7 +347,7 @@
 			baseConfigurationReference = 73B88C1ECBA3920B8220B4A5 /* Pods-BasicDRMPlayback.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4QGB6MS2AS;
 				INFOPLIST_FILE = BasicDRMPlayback/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bitmovin.player.samples.drm.basic-$(DEVELOPMENT_TEAM)";
