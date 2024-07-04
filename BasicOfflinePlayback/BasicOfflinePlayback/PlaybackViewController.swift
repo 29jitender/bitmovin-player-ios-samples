@@ -9,12 +9,8 @@
 import UIKit
 import BitmovinPlayer
 
-// You can find your player license key on the player license dashboard:
-// https://bitmovin.com/dashboard/player/licenses
-private let playerLicenseKey = "<PLAYER_LICENSE_KEY>"
-// You can find your analytics license key on the analytics license dashboard:
-// https://bitmovin.com/dashboard/analytics/licenses
-private let analyticsLicenseKey = "<ANALYTICS_LICENSE_KEY>"
+private let playerLicenseKey = "62b316b0-cf2e-4521-9b43-8ae717c2e6a5"
+private let analyticsLicenseKey = "30d9190a-25a9-4189-8f90-d19f032ab565"
 
 final class PlaybackViewController: UIViewController {
     @IBOutlet weak var playerViewContainer: UIView!
@@ -116,6 +112,7 @@ final class PlaybackViewController: UIViewController {
         playerViewContainer.bringSubviewToFront(playerView)
 
         self.playerView = playerView
+        
 
         player.load(sourceConfig: sourceConfig)
     }

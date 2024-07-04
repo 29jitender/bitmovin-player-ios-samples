@@ -27,13 +27,46 @@ extension SamplesTableViewController {
         }
 
         private func createArtOfMotionSourceConfig() -> SourceConfig {
-            let sourceUrl = URL(string: "https://bitmovin-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+            let sourceUrl = URL(string: "https://video.gumlet.io/667d187c0fe372ddb1af923d/6684c88b5520f5d69dca952d/main.m3u8")!
             let sourceConfig = SourceConfig(url: sourceUrl, type: .hls)
             
-            sourceConfig.title = "Art of Motion"
+            sourceConfig.title = "Gumlet Video"
             sourceConfig.sourceDescription = "Single audio track"
             sourceConfig.posterSource = URL(string: "https://bitdash-a.akamaihd.net/content/art-of-motion_drm/art-of-motion_poster.jpg")!
 
+            guard let fairplayStreamUrl = URL(string: "https://video.gumlet.io/667d187c0fe372ddb1af923d/6684c88b5520f5d69dca952d/main.m3u8"),
+                  let certificateUrl = URL(string: "https://fairplay.gumlet.com/certificate/65e816bbb452c86f03c39dad"),
+                  let licenseUrl = URL(string: "https://fairplay.gumlet.com/licence/65e816bbb452c86f03c39dad/6684c88b5520f5d69dca952d?expires=1720854414000&rental_duration=1296000&playback_duration=1296000&token=dd57583153f90af92140fdf5e3c0a050aa60930f") else {
+                fatalError("Invalid URL(s) when setting up DRM playback sample")
+            }
+            
+            // create drm configuration
+            let fpsConfig = FairplayConfig(license: licenseUrl, certificateURL: certificateUrl)
+            fpsConfig.prepareContentId = { (contentId: String) -> String in
+                print("prepareContentId: \(contentId)")
+                return contentId.replacingOccurrences(of: "skd://", with: "")
+            }
+
+            fpsConfig.prepareMessage = { (spcData: Data, assetID: String) -> Data in
+                print("prepareMessage" )
+                let json: [String: Any] = ["spc": spcData.base64EncodedString(), "assetId": assetID]
+                let jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])
+                return jsonData
+            }
+
+           
+            fpsConfig.prepareLicense = { (ckcData: Data) -> Data in
+                print("prepareLicense" )
+                let data = Data(base64Encoded: ckcData.base64EncodedString())!
+                let jsonObject = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                let ckcValue = jsonObject["ckc"] as! String
+                let ckcData = Data(base64Encoded: ckcValue)!
+                return ckcData
+            }
+            
+            fpsConfig.licenseRequestHeaders = ["Content-Type": "application/json"]
+            sourceConfig.drmConfig = fpsConfig
+            
             return sourceConfig
         }
 
