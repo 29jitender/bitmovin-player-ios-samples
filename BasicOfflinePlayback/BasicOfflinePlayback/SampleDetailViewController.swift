@@ -90,7 +90,7 @@ final class SampleDetailViewController: UIViewController {
 
     func download(sourceConfig: SourceConfig) {
         let downloadConfig = DownloadConfig()
-        downloadConfig.minimumBitrate = 825_000
+//        downloadConfig.minimumBitrate = 825_000
         offlineContentManager?.download(downloadConfig: downloadConfig)
         setViewState(.downloading)
     }
@@ -207,6 +207,7 @@ extension SampleDetailViewController: OfflineContentManagerListener {
 
     func onContentDownloadFinished(_ event: ContentDownloadFinishedEvent, offlineContentManager: OfflineContentManager) {
         print("[SampleDetailViewController] Download Finished")
+        print("Jitender: \(offlineContentManager.offlineDrmLicenseInformation)")
         setViewState(.downloaded)
     }
 

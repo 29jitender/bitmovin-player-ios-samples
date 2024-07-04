@@ -32,7 +32,7 @@ extension SamplesTableViewController {
             
             sourceConfig.title = "Gumlet Video"
             sourceConfig.sourceDescription = "Single audio track"
-            sourceConfig.posterSource = URL(string: "https://bitdash-a.akamaihd.net/content/art-of-motion_drm/art-of-motion_poster.jpg")!
+            sourceConfig.posterSource = URL(string: "https://video.gumlet.io/6634bb6d5c3621a9dc4a9256/66503f5422751178729e5fff/thumbnail-1-0.png?v=1716535212456")!
 
             guard let fairplayStreamUrl = URL(string: "https://video.gumlet.io/667d187c0fe372ddb1af923d/6684c88b5520f5d69dca952d/main.m3u8"),
                   let certificateUrl = URL(string: "https://fairplay.gumlet.com/certificate/65e816bbb452c86f03c39dad"),
@@ -71,22 +71,40 @@ extension SamplesTableViewController {
         }
 
         private func createSintelSourceConfig() -> SourceConfig {
-            let sourceUrl = URL(string: "http://bitmovin-a.akamaihd.net/content/sintel/hls/playlist.m3u8")!
+            let sourceUrl = URL(string: "https://video.gumlet.io/6634bb6d5c3621a9dc4a9256/663caba172c9cd9a60a12bc1/main.m3u8")!
             let sourceConfig = SourceConfig(url: sourceUrl, type: .hls)
             
-            sourceConfig.title = "Sintel"
+            sourceConfig.title = "Non DRM"
             sourceConfig.sourceDescription = "Multiple subtitle languages, Multiple audio tracks"
-            sourceConfig.posterSource = URL(string: "http://bitdash-a.akamaihd.net/content/sintel/poster.png")!
+            sourceConfig.posterSource = URL(string: "https://video.gumlet.io/6634bb6d5c3621a9dc4a9256/663caba172c9cd9a60a12bc1/thumbnail-1-0.png?v=1715254586332")!
 
             return sourceConfig
         }
 
         private func createAppleTestSequenceSimpleSourceConfig() -> SourceConfig {
-            let sourceUrl = URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8")!
+            let sourceUrl = URL(string: "https://fps.ezdrm.com/demo/video/ezdrm.m3u8")!
             let sourceConfig = SourceConfig(url: sourceUrl, type: .hls)
             
-            sourceConfig.title = "Bipbop Simple"
+            sourceConfig.title = "Sample DRM"
             sourceConfig.sourceDescription = "Single audio track"
+            
+            
+            guard let fairplayStreamUrl = URL(string: "https://fps.ezdrm.com/demo/video/ezdrm.m3u8"),
+                         let certificateUrl = URL(string: "https://fps.ezdrm.com/demo/video/eleisure.cer"),
+                         let licenseUrl = URL(string: "https://fps.ezdrm.com/api/licenses/09cc0377-6dd4-40cb-b09d-b582236e70fe") else {
+                       fatalError("Invalid URL(s) when setting up DRM playback sample")
+                   }
+            let fpsConfig = FairplayConfig(license: licenseUrl, certificateURL: certificateUrl)
+
+            fpsConfig.prepareMessage = { spcData, assetId in
+                        spcData
+            }
+
+            fpsConfig.prepareCertificate = { (data: Data) -> Data in
+                        
+                        return data
+            }
+            sourceConfig.drmConfig = fpsConfig
             return sourceConfig
         }
 

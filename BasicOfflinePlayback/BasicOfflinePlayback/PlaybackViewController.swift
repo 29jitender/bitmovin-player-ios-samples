@@ -112,8 +112,8 @@ final class PlaybackViewController: UIViewController {
         playerViewContainer.bringSubviewToFront(playerView)
 
         self.playerView = playerView
-        
-
+        DebugConfig.logging.logger = ConsoleLogger()
+        print("Jitender: \(offlineContentManager.offlineDrmLicenseInformation)")
         player.load(sourceConfig: sourceConfig)
     }
 
@@ -151,6 +151,8 @@ final class PlaybackViewController: UIViewController {
 
 extension PlaybackViewController: PlayerListener {
     func onEvent(_ event: Event, player: Player) {
+//        print(event.name )        
+//        dump(player, name: "[Player]", maxDepth: 1)
         dump(event, name: "[Player Event]", maxDepth: 1)
     }
 }
